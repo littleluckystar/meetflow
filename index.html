@@ -336,7 +336,7 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
       <div class="card">
         <div class="card-header">
           <div class="card-title"><div class="card-icon ci-violet">🗓</div>AI 智能议程</div>
-          <button class="ai-btn" id="agendaBtn" onclick="genAgenda()"><span class="ai-badge">AI</span> 生成议程</button>
+          <button class="ai-btn sm" id="agendaBtn" onclick="genAgenda()"><span class="ai-badge">AI</span> 生成议程</button>
         </div>
         <div id="agendaList" class="agenda-list"><div class="hint">输入会议主题后，AI将生成结构化议程</div></div>
       </div>
@@ -356,9 +356,12 @@ body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);color:var(--text
       <div class="card">
         <div class="card-header">
           <div class="card-title"><div class="card-icon ci-purple">📥</div>会议记录输入</div>
-          <button class="ai-btn" onclick="genAll()"><span class="ai-badge">AI</span> 一键分析</button>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button class="ai-btn sm" style="background:var(--surface);color:var(--primary);border:1px solid rgba(99,102,241,0.3);box-shadow:none;" onclick="fillExample()">📋 填入示例</button>
+            <button class="ai-btn sm" onclick="genAll()"><span class="ai-badge">AI</span> 一键分析</button>
+          </div>
         </div>
-        <textarea class="big-textarea" id="rawNotes" placeholder="粘贴会议记录文字，或手动输入关键内容...&#10;&#10;示例：Alice汇报本季度DAU增长12%，低于预期20%。Bob分析新用户次日留存率仅34%，核心问题在于新手引导流程太长。Carol提出需重新设计onboarding，截止6月10日完成。技术团队David反馈推荐算法准确率偏低，暂无负责人和时间节点。李明提出618大促方案需5月28日前确定，目前尚未启动。下次会议定5月25日。"></textarea>
+        <textarea class="big-textarea" id="rawNotes" placeholder="粘贴会议记录，或点击右上角「填入示例」快速体验 AI 分析..."></textarea>
         <div class="upload-area" onclick="toast('🎤 录音解析功能即将上线')">
           <div class="upload-icon">🎤</div>
           <div class="upload-text">上传会议录音，AI自动转写</div>
@@ -636,6 +639,11 @@ function genPrep(){
 }
 
 /* AFTER */
+function fillExample(){
+  document.getElementById('rawNotes').value = 'Alice汇报本季度DAU增长12%，低于预期的20%。Bob分析主要原因是新用户次日留存率只有34%，核心问题在于新手引导流程太长。Carol提出需要重新设计onboarding流程，争取把留存率提升到45%以上。决定由Carol牵头，产品侧配合，截止6月10日完成新版方案。技术团队David反馈当前推荐算法准确率偏低，需要优化，但资源紧张，暂时没有明确负责人和时间节点。市场部李明提出618大促活动方案需要在5月28日前确定，目前方案还没开始做。下次会议定在5月25日，届时Carol提交onboarding方案初稿。';
+  toast('📋 示例记录已填入，点「一键分析」查看效果');
+}
+
 function genAll(){
   const raw=document.getElementById('rawNotes').value;
   if(!raw.trim()){toast('⚠️ 请先输入会议记录');return;}
